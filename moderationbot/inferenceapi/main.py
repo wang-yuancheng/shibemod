@@ -37,6 +37,7 @@ async def echo(entry: MessageEntry):
 
 @app.post("/predict")
 async def call_model(entry: MessageEntry): 
+    # time_since_join = int(entry.author_time_in_server) - int(entry.msg_created_timestamp)
 
     if int(entry.word_count) <= 3:
         return Response(status_code=status.HTTP_204_NO_CONTENT)

@@ -1,4 +1,4 @@
-import os, asyncio, discord, gspread
+import os, asyncio, discord, gspread, unicodedata
 from datetime import datetime, timezone
 from typing import cast
 from functools import partial
@@ -42,27 +42,46 @@ intents.members = True
 client  = discord.Client(intents=intents)
 
 async def dump_channel(ch: discord.TextChannel):
-    rows, total = [], 0 # rows store the collected batch data before pushing, total keeps track of how many messages handled
+    scanned, stored = 0, 0
+    rows = [] # rows store the collected batch data before pushing
+    seen: set[tuple[int, str]] = set()
     after_2024 = datetime(2024, 1, 1, 0, 0, 0, tzinfo=timezone.utc)
     before_2026 = datetime(2026, 1, 1, 0, 0, 0, tzinfo=timezone.utc)
 
     # limit=None        -> Fetch all available messages in the channel history, If limit=100,fetch the most recent 100 messages
     # oldest_first=True -> Start fetching messages from the oldest to the newest
-    async for m in ch.history(limit=None, oldest_first=True, after=after_2024, before=before_2026):
+    async for m in ch.history(limit=None, oldest_first=True):
+        scanned += 1
+
+        # update progress every 100 messages
+        if scanned % 100 == 0:
+            print(f"\rScanned {scanned:,} , stored {stored:,}", end="", flush=True)
+
+        # Check if message is duplicated
+        key = (m.author.id, m.content.strip().lower())
+        if key in seen:
+            continue
+        seen.add(key)
+
         # Filter: Skip messages that are not at least 4 words
         if len(m.content.split()) <= 3:
             continue
         
-        # Filter: Skip messages that are not real user messages
         # Skipped: Forwarded messages, Stickers, bot messages
+        if m.author.bot:
+            continue    
         if m.type != discord.MessageType.default:
+            continue
+        
+        # Skip if mostly emojis
+        if is_mostly_symbols(m.content):
             continue
 
         # Features
-        content = m.content.replace("\n", " "),
-        msg_timestamp = int(m.created_at.timestamp() * 1000)
+        content = m.content.replace("\n", " ")
+        msg_created_timestamp = int(m.created_at.timestamp() * 1000)
         joined_timestamp = int(m.author.joined_at.timestamp() * 1000) if isinstance(m.author, discord.Member) and m.author.joined_at else ""
-        time_since_join = (m.created_at - m.author.joined_at).total_seconds() if isinstance(m.author, discord.Member) and m.author.joined_at else ""
+        author_time_in_server = (m.created_at - m.author.joined_at).total_seconds() if isinstance(m.author, discord.Member) and m.author.joined_at else ""
         message_length = len(m.content)
         word_count = len(m.content.split())
         has_link = int("http" in m.content.lower())
@@ -71,17 +90,16 @@ async def dump_channel(ch: discord.TextChannel):
 
         rows.append([
             content,
-            msg_timestamp,
+            msg_created_timestamp,
             joined_timestamp,
-            time_since_join,
+            author_time_in_server,
             message_length,
             word_count,
             has_link,
             has_mention,
             num_roles,
         ])
-
-        total += 1
+        stored += 1
         if len(rows) == BATCH_ROWS:
             await push_rows(rows)
             rows.clear()
@@ -90,7 +108,8 @@ async def dump_channel(ch: discord.TextChannel):
     # Clean up rows not pushed from batch
     if rows:
         await push_rows(rows)
-    print(f"{ch} finished, {total} messages")
+    print()
+    print(f"{ch} finished, scanned {scanned:,} messages , stored {stored:,} messages")
 
 @client.event
 async def on_ready():
@@ -110,6 +129,19 @@ async def on_ready():
         else:
             print(f"channel {cid} not found or not text")
     await client.close()
+
+def is_mostly_symbols(text: str, threshold: float = 0.70) -> bool:
+    """Return True when more than `threshold` fraction of characters are
+    NOT letters, digits or punctuation (that is, they are emoji, symbols etc)."""
+    if not text:
+        return True                                 # treat empty string as noise
+    allowed = 0
+    for ch in text:
+        cat = unicodedata.category(ch)
+        if cat[0] in ("L", "N", "P"):               # Letter, Number, Punctuation
+            allowed += 1
+    return (allowed / len(text)) < (1 - threshold)
+
 
 if __name__ == "__main__":
     asyncio.run(client.start(TOKEN))
