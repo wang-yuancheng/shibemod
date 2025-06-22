@@ -1,28 +1,29 @@
 from typing import Optional, Dict, Any
-from fastapi import FastAPI
-from pydantic import BaseModel
+from fastapi import FastAPI, Response, status
+from pydantic import BaseModel, Field
 
 app = FastAPI()
 
 class MessageEntry(BaseModel):
-    message_ID: str
-    author_ID: str
-    author_username: str
-    channel_ID: str
-    channel_name: str
-    guild_ID: str
-    guild_name: str
     content: str
-    msg_timestamp: str                         # milliseconds since 1970-01-01
-    joined_timestamp: Optional[str] = None     # may be "unknown" if member has left
-    time_since_join: str
-    message_length: str
-    word_count: str
-    has_link: str
-    has_mention: str
-    num_roles: str
-    message_type: str
-    
+    message_ID: str = Field(..., alias="messageID")
+    author_ID: str = Field(..., alias="authorID")
+    author_username: str = Field(..., alias="authorUsername")
+    channel_ID: str = Field(..., alias="channelID")
+    channel_name: str = Field(..., alias="channelName")
+    guild_ID: str = Field(..., alias="guildID")
+    guild_name: str = Field(..., alias="guildName")
+    msg_created_timestamp: str = Field(..., alias="msgCreatedTimestamp")# milliseconds since 1970-01-01
+    author_time_in_server: Optional[str] = Field(None, alias="authorTimeInServer")# may be "unknown" if member has left
+    message_length: str = Field(..., alias="messageLength")
+    word_count: str = Field(..., alias="wordCount")
+    has_link: str = Field(..., alias="hasLink")
+    has_mention: str = Field(..., alias="hasMention")
+    num_roles: str = Field(..., alias="numRoles")
+    is_default_message: str = Field(..., alias="isDefaultMessage")
+
+    class Config:
+      validate_by_name = True
 
 @app.get("/")
 def health():
@@ -32,7 +33,7 @@ def health():
 async def echo(entry: MessageEntry):
     probability = 0.99
     message = entry.content
-    return {"message": message, "verdict": str(2), "probability": str(probability)} 
+    return {"message": message, "verdict": str(0), "probability": str(probability)} 
 
 @app.post("/predict")
 async def call_model(entry: MessageEntry): 
