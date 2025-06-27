@@ -1,6 +1,7 @@
-from typing import Optional, Dict, Any
-from fastapi import FastAPI, Response, status
+from typing import Optional
+from fastapi import FastAPI
 from pydantic import BaseModel, Field
+from model.model import classify_sentence
 
 app = FastAPI()
 
@@ -13,8 +14,8 @@ class MessageEntry(BaseModel):
     channel_name: str = Field(..., alias="channelName")
     guild_ID: str = Field(..., alias="guildID")
     guild_name: str = Field(..., alias="guildName")
-    msg_created_timestamp: str = Field(..., alias="msgCreatedTimestamp")# milliseconds since 1970-01-01
-    author_time_in_server: Optional[str] = Field(None, alias="authorTimeInServer")# may be "unknown" if member has left
+    msg_created_timestamp: str = Field(..., alias="msgCreatedTimestamp") # milliseconds since 1970-01-01
+    author_time_in_server: Optional[str] = Field(None, alias="authorTimeInServer") # may be "unknown" if member has left
     message_length: str = Field(..., alias="messageLength")
     word_count: str = Field(..., alias="wordCount")
     has_link: str = Field(..., alias="hasLink")
@@ -29,20 +30,20 @@ class MessageEntry(BaseModel):
 def health():
     return {"status": "alive"}
 
-@app.post("/echo")
-async def echo(entry: MessageEntry):
-    probability = 0.99
-    message = entry.content
-    return {"message": message, "verdict": str(0), "probability": str(probability)} 
-
 @app.post("/predict")
 async def call_model(entry: MessageEntry): 
-    # time_since_join = int(entry.author_time_in_server) - int(entry.msg_created_timestamp)
+    message = entry.content
 
     if int(entry.word_count) <= 3:
-        return Response(status_code=status.HTTP_204_NO_CONTENT)
-    elif int(entry.message_type) == 1:
-        return Response(status_code=status.HTTP_204_NO_CONTENT)
+        return {"message": message, "verdict": str(0), "probability": "-"} 
     
-     # ... otherwise call the ML model and return the prediction
+    label, prob = classify_sentence(message)
+    prob = round(prob[label],3)*100
 
+    if label == 0:
+        return {"message": message, "verdict": str(0), "confidence": str(prob) + "%"} 
+    if label == 1:
+        if prob < 95:
+            return {"message": message, "verdict": str(2), "confidence": str(prob) + "%"} 
+        else: 
+            return {"message": message, "verdict": str(1), "confidence": str(prob) + "%"} 
