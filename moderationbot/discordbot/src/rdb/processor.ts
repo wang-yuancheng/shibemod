@@ -19,7 +19,7 @@ export async function handleVerdict(
     case 1: {
       try {
         await channel.messages.delete(data.messageID);
-        console.log("Deleted:", data.message, "(prob: ", data.probability, ")");
+        console.log("Deleted:", data.message, "(Confidence: ", data.confidence, ")");
       } catch (e) {
         console.error("Delete failed:", e);
       }
@@ -35,9 +35,9 @@ export async function handleVerdict(
         modID
       )) as GuildTextBasedChannel;
       await modChannel.send(
-        `⚠️ Possible issue in <#${data.channelID}> ` +
+        `⚠️ Possible Harmful Content in <#${data.channelID}> ` +
           `https://discord.com/channels/${data.guildID}/${data.channelID}/${data.messageID}\n` +
-          `Message: ${data.message}\nProb: ${data.probability}`
+          `Message: ${data.message}\nConfidence: ${data.confidence}`
       );
       break;
     }

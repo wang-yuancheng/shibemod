@@ -46,7 +46,7 @@ func handleBatch(
 				return
 			}
 			if reply != nil {
-				log.Printf("[%v] Message: %v Verdict: %v Probability: %v", consumer, reply["message"], reply["verdict"], reply["probability"])
+				log.Printf("[%v] Message: %v Verdict: %v Confidence: %v", consumer, reply["message"], reply["verdict"], reply["confidence"])
 			}
 
 			out := map[string]interface{}{

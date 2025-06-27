@@ -1,4 +1,4 @@
-import os, asyncio, discord, gspread, unicodedata
+import os, asyncio, discord, gspread, unicodedata, re
 from datetime import datetime, timezone
 from typing import cast
 from functools import partial
@@ -23,7 +23,7 @@ CREDS  = Credentials.from_service_account_file(KEY_PATH, scopes=SCOPES)
 GSHEET = gspread.authorize(CREDS).open_by_key(SHEET_ID).sheet1
 
 # ---------- config ----------
-BATCH_ROWS = 10_000
+BATCH_ROWS = 10
 
 async def push_rows(rows):
     loop = asyncio.get_running_loop()
@@ -50,9 +50,8 @@ async def dump_channel(ch: discord.TextChannel):
 
     # limit=None        -> Fetch all available messages in the channel history, If limit=100,fetch the most recent 100 messages
     # oldest_first=True -> Start fetching messages from the oldest to the newest
-    async for m in ch.history(limit=None, oldest_first=True):
+    async for m in ch.history(limit=None, oldest_first=True, after=after_2024, before=before_2026):
         scanned += 1
-
         # update progress every 100 messages
         if scanned % 100 == 0:
             print(f"\rScanned {scanned:,} , stored {stored:,}", end="", flush=True)
@@ -64,7 +63,7 @@ async def dump_channel(ch: discord.TextChannel):
         seen.add(key)
 
         # Filter: Skip messages that are not at least 4 words
-        if len(m.content.split()) <= 3:
+        if len(m.content.split()) <= 4:
             continue
         
         # Skipped: Forwarded messages, Stickers, bot messages
