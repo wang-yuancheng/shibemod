@@ -7,7 +7,7 @@ import {
 import { getRedisClient } from "../clients/redis";
 
 const command = new SlashCommandBuilder()
-  .setName("setmodchannel")                      
+  .setName("activate")                      
   .setDescription("Save this channel for moderation alerts")
   .setDefaultMemberPermissions(PermissionFlagsBits.Administrator);
 
@@ -19,7 +19,7 @@ async function execute(inter: ChatInputCommandInteraction) {
   const redis = getRedisClient();
   await redis.set(`modChannel:${inter.guild.id}`, inter.channelId);
 
-  await inter.reply({ content: "✅ Mod channel saved", ephemeral: true });
+  await inter.reply({ content: "✅ Log channel saved", ephemeral: true });
 }
 
-export { command as setModChannelCommand, execute as setModChannelExecute };
+export { command as setLogChannelCommand, execute as setLogChannelExecute };

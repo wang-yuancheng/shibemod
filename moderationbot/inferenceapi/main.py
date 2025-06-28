@@ -33,9 +33,6 @@ def health():
 @app.post("/predict")
 async def call_model(entry: MessageEntry): 
     message = entry.content
-
-    if int(entry.word_count) <= 3:
-        return {"message": message, "verdict": str(0), "probability": "-"} 
     
     label, prob = classify_sentence(message)
     prob = round(prob[label],3)*100

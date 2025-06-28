@@ -6,6 +6,6 @@ export function buildHelpEmbed(): EmbedBuilder {
     .setDescription("Here are the available commands")
     .addFields(
       { name: "/help",          value: "Show this help message" },
-      { name: "/setmodchannel", value: "Save the current channel for moderation alerts (administrator only)" },
+      { name: "/activate",      value: "Activates bot and save current channel for alerts [Admin only]" },
     );
 }
