@@ -21,19 +21,7 @@ export async function handleVerdict(
   if (!modChannel) return;
 
   switch (verdict) {
-    case 0: {
-      await modChannel.send({
-        embeds: [
-          buildEmbed(
-            "✅ Content is safe",
-            data.message,
-            data.confidence,
-            0x57f287        // green
-          ),
-        ],
-      });
-      break;
-    }
+    case 0: break;
 
     case 1: {
       // delete

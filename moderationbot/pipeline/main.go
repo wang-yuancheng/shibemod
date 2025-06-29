@@ -13,7 +13,7 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/redis/go-redis/v9"
-	"github.com/wang-yuancheng/DiscordBot/worker/rdb"
+	"github.com/wang-yuancheng/DiscordBot/pipeline/rdb"
 )
 
 func main() {

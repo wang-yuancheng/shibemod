@@ -1,0 +1,50 @@
+services:
+  discordbot:
+    build:
+      context: ./discordbot
+    env_file:
+      - ./discordbot/.env
+    depends_on: 
+      redis:
+        condition: service_healthy
+    restart: unless-stopped     
+
+  inferenceapi:
+    build: 
+      context: ./inferenceapi
+    container_name: shibemod-fastapi-1
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+    restart: unless-stopped
+  
+  pipeline:
+    build:
+      context: ./pipeline
+    env_file:
+      - ./pipeline/.env
+    volumes:             
+      - ./pipeline/.env:/pipeline/.env:ro   # file is present only at runtime
+    depends_on: 
+      redis:
+        condition: service_healthy
+    restart: unless-stopped 
+
+  redis:
+    image: redis:8-alpine
+    container_name: shibemod-redis-1
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      interval: 5s     
+      timeout: 3s
+      retries: 5
+      start_period: 5s 
+      test: ["CMD", "redis-cli", "ping"]
+    restart: unless-stopped
+
+volumes:
+  redis-data:

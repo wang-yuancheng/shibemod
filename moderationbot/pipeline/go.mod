@@ -1,4 +1,4 @@
-module github.com/wang-yuancheng/DiscordBot/worker
+module github.com/wang-yuancheng/DiscordBot/pipeline
 
 go 1.24.4
 
