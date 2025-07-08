@@ -34,6 +34,6 @@ Published Hugging Face Dataset: [discord-phishing-scam](https://huggingface.co/d
 
 ```text
        XADD              XREAD         HTTP        HTTP          XADD            XREAD
-message ──► messageStream ──► Go-worker ──► FastAPI ──► Go-worker ──► replyStream ──► bot
-(TS bot)      (Redis in)                   (/predict)                 (Redis out)   (action)
+message ──► messageStream ──► Go-worker ──► FastAPI ──► Go-worker ──► replyStream ──► action
+(bot)         (Redis in)                   (/predict)                 (Redis out)     (bot)
  
