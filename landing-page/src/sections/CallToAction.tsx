@@ -24,10 +24,13 @@ export const CallToAction = () => {
       <div className="container">
         <div className="section-heading relative">
           <h2 className="section-title">Invite shibemod today!</h2>
-          <p className="section-description mt-5">
-            Keep your community clean, the easy way.
-            <br></br> Because your mods could really use a break right now.
-          </p>
+          <div className="section-description mt-5">
+            <div className="flex flex-col md:flex-row md:justify-center">
+              <span>Keep your community clean, </span>
+              <span>the easy way.</span>
+            </div>
+            <span>Because your mods could really use a break right now.</span>
+          </div>
           <motion.img
             src={starImage.src}
             alt="Star Image"
@@ -43,7 +46,7 @@ export const CallToAction = () => {
             style={{ translateY }}
           />
         </div>
-        <div className="flex gap-2 mt-10 justify-center items-center">
+        <div className="flex flex-col md:flex-row gap-2 mt-10 justify-center items-center">
           <a
             href="https://discord.com/oauth2/authorize?client_id=1388455924510887966&permissions=8&integration_type=0&scope=applications.commands+bot"
             target="_blank"
@@ -51,19 +54,21 @@ export const CallToAction = () => {
           >
             <button className="btn btn-primary">Invite to server</button>
           </a>
-          <button className="px-4 py-2 rounded-lg font-medium inline-flex items-center justify-center tracking-tight border border-[#222]/10 gap-1">
-            <a
-              href="https://github.com/wang-yuancheng/shibemod"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <div className="flex flex-col md:flex-row">
-                <span>Like This Project? </span>
-                <span>Star It On GitHub!</span>
-              </div>
-            </a>
-            <Image src={StarIcon} alt="Star" className="h-5 w-5" />
-          </button>
+          <div className="hidden md:block">
+            <button className="px-4 py-2 rounded-lg font-medium inline-flex items-center justify-center tracking-tight border border-[#222]/10 gap-1">
+              <a
+                href="https://github.com/wang-yuancheng/shibemod"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="flex gap-1">
+                  <span>Like This Project? </span>
+                  <span>Star It On GitHub!</span>
+                </div>
+              </a>
+              <Image src={StarIcon} alt="Star" className="h-5 w-5" />
+            </button>
+          </div>
         </div>
       </div>
     </section>
