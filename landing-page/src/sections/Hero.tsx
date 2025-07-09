@@ -1,8 +1,6 @@
 "use client";
 
-import StarIcon from "@/assets/star-emoji.png"
 import discordImage from "@/assets/discord.png";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { useRef } from "react";
 
@@ -17,7 +15,7 @@ export const Hero = () => {
       <div className="container">
         <div className="md:flex items-center">
           <div className="md:w-[478px]">
-            <div className="tag">Last Update: 9 July</div>
+            <div className="tag">Last Update: 15 July 2025</div>
             <h1 className="text-5xl md:text-7xl font-bold tracking-tighter bg-gradient-to-b from-black to-[#001E80] text-transparent bg-clip-text mt-6">
               Shibemod
             </h1>
@@ -26,10 +24,22 @@ export const Hero = () => {
               not just match patterns.
             </p>
             <div className="flex flex-row gap-1 md:items-center mt-[30px]">
-              <button className="btn btn-primary">Invite to server</button>
-              <button className="px-4 py-2 rounded-lg font-medium inline-flex items-center justify-center tracking-tight border border-[#222]/10 gap-1">
-                <span>Documentation</span>
-              </button>
+              <a
+                href="https://discord.com/oauth2/authorize?client_id=1388455924510887966&permissions=8&integration_type=0&scope=applications.commands+bot"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <button className="btn btn-primary">Invite to server</button>
+              </a>
+              <a
+                href="https://github.com/wang-yuancheng/shibemod"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <button className="px-4 py-2 rounded-lg font-medium inline-flex items-center justify-center tracking-tight border border-[#222]/10 gap-1">
+                  <span>Documentation</span>
+                </button>
+              </a>
             </div>
           </div>
           <div className="mt-20 md:mt-0 md:h-[648px] md:flex-1 relative">

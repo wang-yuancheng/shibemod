@@ -8,10 +8,16 @@ export const Header = () => {
           Product is constantly being improved, results may vary.
         </p>
         <div className="inline-flex gap-1 items-center">
-          <button>
-            Send us feedback here
-            <ArrowRight className="h-4 w-4 inline-flex justify-center items-center" />
-          </button>
+          <a
+            href="https://discord.gg/2Sby35W"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <button>
+              Join my server to send me feedback 
+              <ArrowRight className="h-4 w-4 inline-flex justify-center items-center" />
+            </button>
+          </a>
         </div>
       </div>
     </header>

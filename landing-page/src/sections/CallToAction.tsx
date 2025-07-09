@@ -44,9 +44,21 @@ export const CallToAction = () => {
           />
         </div>
         <div className="flex gap-2 mt-10 justify-center">
-          <button className="btn btn-primary">Invite to server</button>
+          <a
+            href="https://discord.com/oauth2/authorize?client_id=1388455924510887966&permissions=8&integration_type=0&scope=applications.commands+bot"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <button className="btn btn-primary">Invite to server</button>
+          </a>
           <button className="px-4 py-2 rounded-lg font-medium inline-flex items-center justify-center tracking-tight border border-[#222]/10 gap-1">
-            <span>Like This Project? Star It On GitHub!</span>
+            <a
+              href="https://github.com/wang-yuancheng/shibemod"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>Like This Project? Star It On GitHub!</span>
+            </a>
             <Image src={StarIcon} alt="Star" className="h-5 w-5" />
           </button>
         </div>
