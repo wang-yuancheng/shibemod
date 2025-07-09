@@ -1,6 +1,7 @@
 "use client";
 
-import ArrowRight from "@/assets/arrow-right.svg";
+import StarIcon from "@/assets/star-emoji.png";
+import Image from "next/image";
 import starImage from "@/assets/star.png";
 import springImage from "@/assets/spring.png";
 import { motion, useScroll, useTransform } from "framer-motion";
@@ -18,14 +19,14 @@ export const CallToAction = () => {
   return (
     <section
       ref={sectionRef}
-      className="bg-gradient-to-b from-white to-[#D2DCFF] py-24 overflow-x-clip"
+      className="bg-gradient-to-b from-white to-[#E0E3FF] py-24 overflow-x-clip"
     >
       <div className="container">
         <div className="section-heading relative">
-          <h2 className="section-title">Sign up for free today</h2>
+          <h2 className="section-title">Invite shibemod today!</h2>
           <p className="section-description mt-5">
-            Celebrate the joy of accomplishment with an app designed to track
-            your progress and motivate your efforts.
+            Keep your community clean, the easy way.
+            <br></br> Because your mods could really use a break right now.
           </p>
           <motion.img
             src={starImage.src}
@@ -43,10 +44,10 @@ export const CallToAction = () => {
           />
         </div>
         <div className="flex gap-2 mt-10 justify-center">
-          <button className="btn btn-primary">Get for free</button>
-          <button className="btn btn-text gap-1">
-            <span>Learn more</span>
-            <ArrowRight className="h-5 w-5" />
+          <button className="btn btn-primary">Invite to server</button>
+          <button className="px-4 py-2 rounded-lg font-medium inline-flex items-center justify-center tracking-tight border border-[#222]/10 gap-1">
+            <span>Like This Project? Star It On GitHub!</span>
+            <Image src={StarIcon} alt="Star" className="h-5 w-5" />
           </button>
         </div>
       </div>

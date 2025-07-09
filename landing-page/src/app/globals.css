@@ -31,7 +31,7 @@
   }
 
   .section-heading {
-    @apply max-w-[540px] mx-auto;
+    @apply max-w-[700px] mx-auto;
   }
 
   .card {

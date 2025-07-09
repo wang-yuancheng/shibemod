@@ -90,8 +90,8 @@ const DetectedMessagesColumn = (props: {
     >
       {[...new Array(2)].fill(0).map((_, index) => (
         <React.Fragment key={index}>
-          {props.messages.map(({ text, imageSrc, name, username }) => (
-            <div className="card">
+          {props.messages.map(({ text, imageSrc, name, username }, i) => (
+            <div className="card" key={`${username}-${i}`}>
               <div>{text}</div>
               <div className="flex items-center gap-2 mt-5">
                 <Image
@@ -101,7 +101,6 @@ const DetectedMessagesColumn = (props: {
                   height={40}
                   className="h-10 w-10 rounded-full"
                 />
-
                 <div className="flex flex-col">
                   <div className="font-medium tracking-tight leading-5">
                     {name}
@@ -124,14 +123,10 @@ export const DetectedMessages = () => {
   return (
     <section className="bg-white">
       <div className="container">
-        <div className="section-heading">
-          <div className="flex justify-center">
-            <div className="tag mt-10">Testimonials</div>
-          </div>
-          <h2 className="section-title mt-5">What our users say</h2>
+        <div className="max-w-[700px] mx-auto pt-10">
+          <h2 className="section-title mt-5">Purge Scams Automatically</h2>
           <p className="section-description mt-5">
-            From intuitive design to powerful features, out app has become an
-            essential tool for users around the world.
+            Tactics below? Caught instantly, every time.
           </p>
         </div>
         <div className="flex justify-center gap-6 mt-10 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)] max-h-[738px] overflow-hidden">
