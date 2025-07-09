@@ -43,7 +43,7 @@ export const CallToAction = () => {
             style={{ translateY }}
           />
         </div>
-        <div className="flex gap-2 mt-10 justify-center">
+        <div className="flex gap-2 mt-10 justify-center items-center">
           <a
             href="https://discord.com/oauth2/authorize?client_id=1388455924510887966&permissions=8&integration_type=0&scope=applications.commands+bot"
             target="_blank"
@@ -57,7 +57,10 @@ export const CallToAction = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <span>Like This Project? Star It On GitHub!</span>
+              <div className="flex flex-col md:flex-row">
+                <span>Like This Project? </span>
+                <span>Star It On GitHub!</span>
+              </div>
             </a>
             <Image src={StarIcon} alt="Star" className="h-5 w-5" />
           </button>
