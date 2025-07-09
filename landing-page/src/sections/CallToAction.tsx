@@ -42,7 +42,7 @@ export const CallToAction = () => {
             src={springImage.src}
             alt="Spring Image"
             width={360}
-            className="hidden md:block absolute -right-[331px] -top-[19px]"
+            className="hidden md:block absolute -right-[331px] -top-[157px] "
             style={{ translateY }}
           />
         </div>
