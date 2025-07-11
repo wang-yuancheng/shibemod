@@ -3,7 +3,8 @@ import torch
 from transformers import AutoConfig, AutoTokenizer, AutoModelForSequenceClassification
 
 # Get absolute path to current directory
-MODEL_DIR = Path(__file__).resolve().parent  
+CURRENT_FILE_DIR = Path(__file__).resolve().parent  
+MODEL_DIR = CURRENT_FILE_DIR / 'model'
 
 # Load everything once when the module is imported
 config    = AutoConfig.from_pretrained(MODEL_DIR)

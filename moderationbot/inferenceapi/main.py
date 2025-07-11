@@ -1,7 +1,7 @@
 from typing import Optional
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
-from model.model import classify_sentence
+from model import classify_sentence
 from normalize_text import normalize_message
 
 app = FastAPI()
@@ -35,11 +35,11 @@ def health():
 async def call_model(entry: MessageEntry): 
     message = entry.content
     message = normalize_message(message)
-    
-    print(message)
 
     label, prob = classify_sentence(message)
     prob = round(prob[label],3)*100
+
+    print(" Message: ", message, "\n", "Verdict: ", label, "\n", "Probability: ", prob)
 
     if label == 0:
         return {"message": message, "verdict": str(0), "confidence": str(prob) + "%"} 
