@@ -30,6 +30,10 @@ Published Hugging Face Dataset: [discord-phishing-scam](https://huggingface.co/d
 |----|--------------|-------|----|
 | **5 e-5** | **4 e-2** | **4** | **0.955** |
 
+## Evaluation Metrics
+During training - F1 score for balance
+Production - Prioritize high precision
+
 ## Runtime Architecture
 
 ```text
