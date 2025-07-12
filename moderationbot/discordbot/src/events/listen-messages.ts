@@ -1,6 +1,7 @@
 import { GuildTextBasedChannel, Message, MessageType } from "discord.js";
 import { getDiscordClient } from "../clients/discord";
 import { getRedisClient } from "../clients/redis";
+import { getIgnoredChannelID } from "../utils/mod-channel";
 
 function isScannable(message: Message): boolean {
   return (
@@ -23,6 +24,9 @@ export function sendMessageToRedisStream() {
 
   client.on("messageCreate", async (message: Message) => {
     if (!isScannable(message)) return;
+
+    const ignoreId = await getIgnoredChannelID(message.guild!.id);
+    if (ignoreId && message.channelId === ignoreId) return;
 
     const channelName = (message.channel as GuildTextBasedChannel)?.name;
     if (!channelName) {

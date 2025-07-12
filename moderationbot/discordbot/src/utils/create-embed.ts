@@ -5,7 +5,14 @@ export function buildHelpEmbed(): EmbedBuilder {
     .setTitle("Bot Help")
     .setDescription("Here are the available commands")
     .addFields(
-      { name: "/help",          value: "Show this help message" },
-      { name: "/activate",      value: "Activates bot and save current channel for alerts [Admin only]" },
+      { name: "/help", value: "Show this help message" },
+      {
+        name: "/activate",
+        value: "Activates bot and save current channel for alerts [Admin only]",
+      },
+      {
+        name: "/ignore",
+        value: "Toggle ignores for current channel [Admin only]",
+      }
     );
 }

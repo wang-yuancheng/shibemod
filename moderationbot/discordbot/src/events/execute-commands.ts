@@ -2,6 +2,7 @@ import { MessageFlags } from "discord.js";
 import { getDiscordClient } from "../clients/discord";
 import { setLogChannelExecute } from "../commands/set-mod-channel";
 import { helpExecute } from "../commands/help";
+import { ignoreChannelExecute } from "../commands/ignore-channel";
 
 export function startInteractionListener(): void {
   const client = getDiscordClient();
@@ -16,6 +17,9 @@ export function startInteractionListener(): void {
           break;
         case "help":
           await helpExecute(interaction);
+          break;
+        case "ignore":
+          await ignoreChannelExecute(interaction);
           break;
         default:
           await interaction.reply({

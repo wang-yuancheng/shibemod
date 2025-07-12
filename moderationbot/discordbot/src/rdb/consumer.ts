@@ -1,6 +1,7 @@
 import { getRedisClient } from "../clients/redis";
 import { handleVerdict } from "./processor";
 import { createConsumerGroup, readGroup, ack } from "./consumer-group";
+import { getIgnoredChannelID } from "../utils/mod-channel";
 
 const STREAM_KEY   = "replyStream";
 const GROUP_NAME   = "replyStreamCG";
@@ -14,7 +15,7 @@ export async function startReplyListener(): Promise<void> {
   await createConsumerGroup(redis, STREAM_KEY, GROUP_NAME);
 
   running = true;
-
+  
   while (running) {
     try {
       const streams = await readGroup(
