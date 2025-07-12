@@ -36,7 +36,7 @@ export const Hero = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <button className="px-4 py-2 rounded-lg font-medium inline-flex items-center justify-center tracking-tight border border-[#222]/10 gap-1">
+                <button className="btn-github">
                   <span>Documentation</span>
                 </button>
               </a>
