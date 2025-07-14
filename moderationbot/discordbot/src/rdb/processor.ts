@@ -22,16 +22,16 @@ export async function handleVerdict(
 
   switch (verdict) {
     case 0:
-      await modChannel.send({
-        embeds: [
-          buildEmbed(
-            `✅ Clean Content`,
-            data.message,
-            data.confidence,
-            0x57f287
-          ),
-        ],
-      });
+      // await modChannel.send({
+      //   embeds: [
+      //     buildEmbed(
+      //       `✅ Clean Content`,
+      //       data.message,
+      //       data.confidence,
+      //       0x57f287
+      //     ),
+      //   ],
+      // });
       break;
     case 1: {
       // delete
