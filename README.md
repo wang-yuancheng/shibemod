@@ -9,15 +9,7 @@ mods when unsure.**
 
 
 ## Dataset
-
-| stage | messages | notes |
-|-------|----------|-------|
-| raw dump | 80 k | skipped bots/system/stickers |
-| cleaning rules | 20 k | ≥4 words, deduplication |
-| manual labelling | 2 k | class balance - 13.81 % positives |
-
 Published Hugging Face Dataset: [discord-phishing-scam](https://huggingface.co/datasets/wangyuancheng/discord-phishing-scam)
-
 
 ## Model & Hyper-parameter Tuning
 
