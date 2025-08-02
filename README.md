@@ -8,7 +8,7 @@ text and require moderators to constantly delete messages. <br> **Goal: Implemen
 mods when unsure.**
 
 ## Tech Stack
-![My Skills](https://skillicons.dev/icons?i=ts,go,python,pytorch,redis,docker,aws,gcp)
+![My Skills](https://skillicons.dev/icons?i=ts,go,python,fastapi,pytorch,redis,docker,aws,gcp)
 
 ## Dataset
 Published Hugging Face Dataset: [discord-phishing-scam](https://huggingface.co/datasets/wangyuancheng/discord-phishing-scam)
