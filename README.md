@@ -7,8 +7,16 @@ airdrops, phishing links).<br> Traditional keyword filters miss obfuscated
 text and require moderators' constant attention to remove them. <br> Hence, we
 built a lightweight Discord moderation bot that can filter common scam messages.
 
+## Bot Status 
+**⚠️ This bot is now offline.**
+
+Due to the ongoing cost of hosting, the service was discontinued in **July 2026**.
+
+❤️ Thank you to everyone who supported the project. ❤️
+
 ## Tech Stack
 ![My Skills](https://skillicons.dev/icons?i=ts,go,python,fastapi,pytorch,redis,docker,aws,gcp)
+
 
 ## Dataset
 Using a simple python script, discord chat logs were pulled and cleaned. <br><br>
